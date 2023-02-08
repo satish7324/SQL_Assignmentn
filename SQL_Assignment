@@ -1,0 +1,164 @@
+
+
+-----------------------------Assignment -1----------------------------------------
+
+
+
+-   Please create following tables:
+    
+    -   Student_Details
+			
+        -   Name
+
+        -   Standard
+
+        -   Sex
+
+        -   Monthly Present
+
+        -   Daily Hours
+
+    
+    -   PRODUCTS
+        
+        -   Name
+
+        -   Price
+
+    
+    -   Materials
+        
+        -   Name
+
+        -   Price (allow to insert value like "Rs. 100")
+
+	-   Effective Date
+
+
+- Insert appropriate records in each tables.
+
+- Display all the records for each tables separately.
+
+- Remove all the records from each tables (with and without using DELETE statement).
+
+- Delete all the above tables.
+
+
+
+
+-----------------------------Assignment -2----------------------------------------
+
+
+-   Tables Used
+    
+    -   student  (recid, name)
+
+    -   studentdetail (recid, studentid, standard, flagsex)
+
+    -   studentpresent (recid, studentid, month, present)
+
+    -   studenthours (recid, studentid, datex, hours)
+
+- Create above mentioned tables.
+
+- Insert appropriate records in the above tables.
+
+- Write queries for the following requirements.
+    
+    -  Display following details for each student:
+        
+        -   Name
+
+        -   Standard
+
+        -   Sex
+
+   NOTE : The same above headers should be displayed in the query & apply sorting on Name.
+    
+    -   Find SUM of student hours.			Fields : Name, TotalHours
+
+    -   Find Average Present of each student.		Fields : Name, Present
+
+    -   Find Minimum present among all students.	Fields : MinPresent
+
+    -   Find Maximum present among all students.	Fields : MaxPresent
+
+    -   Display fields like Name, Date, Hours from "studenthours" table where Date should be in following format :
+        
+        -   DD/MM/YY
+
+        -   MM/DD/YY
+
+        -   YYYY-MM-DD
+
+        -   MM/DD Day   
+   
+
+
+
+
+
+
+
+
+
+-----------------------------Assignment -3----------------------------------------
+
+
+
+
+
+
+-   Tables Used:=
+    
+    -	student  (recid, name)
+
+    -   studentdetail (recid, studentid, standard, flagsex)
+
+    -   studentpresent (recid, studentid, month, present)
+
+    -   studenthours (recid, studentid, datex, hours)
+
+    -   product (recid, name)
+
+    -   productprice (recid, productid, code, effdt, price)
+
+
+-   Write queries for following requirements:=
+    
+    -   Insertion requirement:
+        
+        - Insert appropriate records in all the tables so that their relationships with each other are maintained properly. Insert only first name as 'student.name' in "student" table.
+
+    
+    -   Modification requirement:
+        
+        -   Change value of 'student.name' with any other value for student.recid = 3.
+        
+        -   Update all "student" records to append character " A." as the middle name for "student.name" field.
+
+        -   Update all "productprice" records to add 25.00 in "price" field.
+
+        -   Update "product" table to add "A" in 'product.name' where related 'product.code = AB'.
+
+        -   Update all "studentpresent" records to add 2 in 'studentpresentpresent' where related 'studenthours.hours >= 8'.
+
+
+
+    -   Delete requirement:
+        
+        -   Remove a record from "product" table where 'product.recid = 5'
+        
+        -   Remove all "student" records where the 'student.name' starts with character "A".
+        
+        -   Remove all "studentdetails" record where related 'studenthours.hours <= 3'.
+
+
+
+
+
+
+
+
+
+
