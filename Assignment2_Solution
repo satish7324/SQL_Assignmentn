@@ -1,0 +1,80 @@
+
+create database trainee;
+
+use trainee
+
+
+
+create TABLE student(
+  recid INT PRIMARY KEY,
+  name VARCHAR(255)
+);
+select * from student;
+INSERT INTO student (recid, name)
+VALUES
+  (1, 'John Doe'),
+  (2, 'Jane Doe');
+  
+
+  
+  
+  CREATE TABLE studentdetail (
+  recid INT PRIMARY KEY,
+  studentid INT,
+  standard INT,
+  flagsex BOOLEAN,
+  FOREIGN KEY (studentid) REFERENCES student(recid)
+);
+select * from studentdetail;
+INSERT INTO studentdetail (recid, studentid, standard, flagsex)
+VALUES
+  (1, 1, 10, 1),
+  (2, 2, 9, 0);
+  
+  
+  
+  
+
+CREATE TABLE studentpresent (
+  recid INT PRIMARY KEY,
+  studentid INT,
+  month DATE,
+  present BOOLEAN,
+  FOREIGN KEY (studentid) REFERENCES student(recid)
+);
+INSERT INTO studentpresent(recid, studentid, month, present)
+VALUES
+  (1, 1, '2022-01-01', 1),
+  (2, 2, '2022-01-01', 0);
+select * from studentpresent;
+
+
+
+CREATE TABLE studenthours (
+  recid INT PRIMARY KEY,
+  studentid INT,
+  datex DATE,
+  hours INT,
+  FOREIGN KEY (studentid) REFERENCES student(recid)
+);
+INSERT INTO studenthours (recid, studentid, datex, hours)
+VALUES (2, 2, '2022-01-02', 9);
+
+
+ select * from studenthours;
+
+
+
+select s.name, sp.standard, sp.flagsex from student s 
+inner join studentdetail sp on s.recid = sp.recid; 
+
+select s.name, sum(sh.hours) as TotalHours from student s 
+inner join studenthours sh on s.recid = sh.recid
+group by s.name order by s.name;
+
+
+select student.name, avg(studentpresent.present) as present from studentpresent  
+inner join student  on student.recid = studentpresent.recid
+group by student.name
+order by student.name;
+
