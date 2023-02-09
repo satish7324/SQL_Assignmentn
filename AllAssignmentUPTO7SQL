@@ -1,0 +1,624 @@
+
+---------------------Assignment - 1 Solution------------------------------------------------------
+
+
+create table Satish_Employee_Details(
+id int  primary key,
+name varchar(20),
+Standard varchar(20),
+Sex varchar(10),
+Monthly_Present varchar(10),
+Daily_Hours int
+);
+
+insert into Satish_Employee_Details(name,Standard,Sex,Monthly_Present,Daily_Hours)
+ values ('Satisgh Singh','one', 'Male','jan', 8);
+
+select * from Satish_Employee_Details;
+
+insert into Satish_Employee_Details(name, Standard, Sex, Monthly_Present, Daily_Hours)
+ values ('JayDev','second', 'Male','Feb', 10);
+
+insert into Satish_Employee_Details(name, Standard, Sex, Monthly_Present, Daily_Hours)
+ values ('Isha','2nd', 'Male','March', 5);
+
+
+
+
+create table Satish_PRODUCT(
+Name varchar(20),
+Price int(50)
+);
+select * from Satish_PRODUCT;
+
+insert into Satish_PRODUCT(Name, Price) values('Leptop', 50000);
+insert into Satish_PRODUCT(Name, Price) values('copy', 40000);
+insert into Satish_PRODUCT(Name, Price) values('pen', 30000);
+
+
+create table Satish_Materials(
+Name varchar(20),
+Price int(50),
+Effective_Date date
+);
+
+
+select * from Satish_Materials;
+
+insert into Satish_Materials(Name, Price, Effective_Date) values('Leptop', 50000, '2022/20/02');
+insert into Satish_Materials(Name, Price, Effective_Date) values('copy', 40000, '11/10/2022');
+insert into Satish_Materials(Name, Price, Effective_Date) values('pen', 30000, '12/10/2022');
+
+
+-- trancate table Satish_Employee_Details;
+-- trancate table Satish_Materials;
+-- trancate table Satish_PRODUCT;          /* it will remove all row from table & table will remain */
+
+drop table Satish_Employee_Details;
+drop table Satish_Materials;
+drop table Satish_PRODUCT;                        /* it will table  from databse */
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+-- Assignment-2
+
+
+
+
+
+---------------------Assignment - 2 Solution------------------------------------------------------
+
+
+create TABLE student(
+  recid INT PRIMARY KEY,
+  name VARCHAR(255)
+);
+select * from student;
+INSERT INTO student (recid, name)
+VALUES
+  (1, 'John Doe'),
+  (2, 'Jane Doe');
+
+
+
+
+  CREATE TABLE studentdetail (
+  recid INT PRIMARY KEY,
+  studentid INT,
+  standard INT,
+  flagsex BOOLEAN,
+  FOREIGN KEY (studentid) REFERENCES student(recid)
+);
+select * from studentdetail;
+INSERT INTO studentdetail (recid, studentid, standard, flagsex)
+VALUES
+  (1, 1, 10, 1),
+  (2, 2, 9, 0);
+
+
+
+
+
+CREATE TABLE studentpresent (
+  recid INT PRIMARY KEY,
+  studentid INT,
+  month DATE,
+  present BOOLEAN,
+  FOREIGN KEY (studentid) REFERENCES student(recid)
+);
+INSERT INTO studentpresent(recid, studentid, month, present)
+VALUES
+  (1, 1, '2022-01-01', 1),
+  (2, 2, '2022-01-01', 0);
+select * from studentpresent;
+
+
+
+CREATE TABLE studenthours (
+  recid INT PRIMARY KEY,
+  studentid INT,
+  datex DATE,
+  hours INT,
+  FOREIGN KEY (studentid) REFERENCES student(recid)
+);
+INSERT INTO studenthours (recid, studentid, datex, hours)
+VALUES (2, 2, '2022-01-02', 9);
+
+
+select * from studenthours;
+
+
+
+select s.name, sp.standard, sp.flagsex from student s
+inner join studentdetail sp on s.recid = sp.recid;
+
+
+
+select s.name, sum(sh.hours) as TotalHours from student s
+inner join studenthours sh on s.recid = sh.recid
+group by s.name order by s.name;
+
+
+select student.name, avg(studentpresent.present) as present from studentpresent
+inner join student  on student.recid = studentpresent.recid
+group by student.name
+order by student.name;
+
+
+
+select min(present) as 'present' from studentpresent ;
+
+select max(present) as 'present' from studentpresent ;
+
+
+select Name,Hours,DATE_FORMAT(datex,'%d/%m/%Y') "DD/MM/YY",
+DATE_FORMAT(datex,'%m/%d/%Y') "MM/DD/YY" ,
+DATE_FORMAT(datex,'%Y/%m/%d') "YYYY/MM/DD" ,
+DATE_FORMAT(datex,'%m/%d %a') "MM/DD"
+from student inner join studenthours
+on student.recid = studenthours.recid;
+
+
+
+
+/* 1TABLE OF student  (recid, name) */
+
+create TABLE student(
+  recid INT PRIMARY KEY,
+  name VARCHAR(255)
+);
+select * from student;
+INSERT INTO student (recid, name)
+VALUES
+  (1, 'John Doe'),
+  (2, 'Jane Doe');
+
+
+
+/* 2TABLE OF studentdetail (recid, studentid, standard, flagsex)*/
+
+CREATE TABLE studentdetail (
+  recid INT PRIMARY KEY,
+  studentid INT,
+  standard INT,
+  flagsex BOOLEAN,
+  FOREIGN KEY (studentid) REFERENCES student(recid)
+);
+select * from studentdetail;
+INSERT INTO studentdetail (recid, studentid, standard, flagsex)
+VALUES
+  (1, 1, 10, 1),
+  (2, 2, 9, 0);
+
+
+
+
+
+
+/* 3TABLE OF studentpresent (recid, studentid, month, present)*/
+
+CREATE TABLE studentpresent (
+  recid INT PRIMARY KEY,
+  studentid INT,
+  month DATE,
+  present BOOLEAN,
+  FOREIGN KEY (studentid) REFERENCES student(recid)
+);
+INSERT INTO studentpresent(recid, studentid, month, present)
+VALUES
+  (1, 1, '2022-01-01', 1),
+  (2, 2, '2022-01-01', 0);
+select * from studentpresent;
+
+
+
+
+/* 4TABLE OF studenthours (recid, studentid, datex, hours) */
+
+CREATE TABLE studenthours (
+  recid INT PRIMARY KEY,
+  studentid INT,
+  datex DATE,
+  hours INT,
+  FOREIGN KEY (studentid) REFERENCES student(recid)
+);
+INSERT INTO studenthours (recid, studentid, datex, hours)
+VALUES (2, 2, '2022-01-02', 9);
+
+
+select * from studenthours;
+
+
+
+
+
+/* 5TABLE OF product (recid, name)*/
+
+CREATE TABLE product(
+  recid INT PRIMARY KEY,
+  name VARCHAR(255)
+);
+select * from product;
+INSERT INTO student (recid, name)
+VALUES
+  (1, 'mobile'),
+  (2, 'leptop');
+
+
+
+
+
+/*6TABLE OF productprice (recid, productid, code, effdt, price) */
+
+CREATE TABLE productprice(
+recid INT PRIMARY KEY,
+productid INT,
+code INT,
+effdt date,
+price int,
+FOREIGN KEY(productid ) REFERENCES product(recid)
+);
+select * from productprice;
+INSERT INTO productprice(recid, productid, code, effdt, price)
+VALUES
+  (1, 1, 10, 1),
+  (2, 2, 9, 0);
+
+
+----UPDATIN IN TABLE------------
+
+---------->Change value of 'student.name' with any other value for student.recid = 3.-------
+update student set name="Satish" where student.recid=1;
+
+
+------------>Update all "student" records to append character " A." as the middle name for "student.name" field.
+update student set name=concat(name,'A.');
+
+
+
+------------->Update all "productprice" records to add 25.00 in "price" field.
+update productprices set price = price + 25.00;
+
+
+
+------------->Update "product" table to add "A" in 'product.name' where related 'product.code = AB'
+update product set name = concat(name, 'A.') where recid in (select recid from productprices  where code=10);
+select * from product;
+
+
+
+---------->Update all "studentpresent" records to add 2 in 'studentpresentpresent' where related 'studenthours.hours >= 8'.
+update studentpresent set present = present + 2 where studentid in (select studentid from studenthourswhere hours >=8);
+select * from studentpresent;
+
+
+----------> Remove a record from "product" table where 'product.recid = 2
+delete from Product where recid=2;
+
+
+
+
+------------->Remove all "student" records where the 'student.name' starts with character "A".
+delete from product where name like 'm%';
+
+
+------------->Remove all "studentdetails" record where related 'studenthours.hours <= 3'.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+-----------------------------------------Assignment - 4 -----------------------------
+
+--->Q-1 Write a query which will return value '5.0' for input value of '4.1' as well as '4.8'.
+SELECT CEIL(4.1); ----> CEIL() it will return  the integer value  greater than Decimal Value
+
+
+
+
+----->Q-2 Write a query which will return value '4.0' for input value of '4.1' as well as '4.8'.
+SELECT FLOOR(4.8); ----> FLOOR() it will return  the integer value  Less than Decimal Value
+
+
+
+----->Q-3 What will be the output of following query:
+---->SELECT MOD(11,3);
+---->SELECT 11 % 3;
+
+SELECT MOD(11,3); ------------>it is used to for modulus  ans as ----------> 11 % 3
+SELECT 11 % 3; ----------->it will return the  remainder ans as ----> 2
+
+
+
+
+-----> Q-4 Write a query to find 2 raise to power 3.
+SELECT POWER (2, 3);        ----> It will return the 8 ans.(2 raise to the power 3 means 8)
+
+
+
+------> Q-5 Write a query to generate random number using MySQL function.
+SELECT RAND(); -------> it wil generate any random number btwn 0 to 1 means 0.96 or 0.124 like that
+
+
+
+--------->Q-6 Write a query to supply seed to the function generating random number.
+SELECT RAND(),RAND(2),RAND(2);  ----------> RAND() function with seed value
+
+
+--->Q-7 Write a query which will return value '4' for '3.5' and '3' for '3.4'.
+SELECT ROUND(3.5); ------> it will return 4 becouse it's >= 3.5
+SELECT ROUND(3.4); ------> it will return 3 becouse it's <= 3.5
+
+
+
+----->Q-8 Write a query so that output will be '15.75' for the value '15.7463847'.
+SELECT ROUND(15.7463847, 2) ---------> it will give two digit only after point value
+
+
+----->Q-9 Write a query to find square root of given value. What will be the output if the provided value is negative?
+SELECT SQRT(64); ---> If we put negative value then it will Error
+
+
+------->Q-10 Write a query so that output will be '15.74' for the value '15.7463847'.
+SELECT TRUNCATE(15.7463847, 2);
+
+
+------->Q-11 Write a query which will output '15.2500' for provided value '15.25'.
+SELECT ROUND(15.25, 4 );
+
+
+---------> Write a query to display all the product names with code in bracket in one column and 2 decimal significant price in second column, 
+----------> e.g. : MySql book (MS09210) | 10.99
+---------->Here 'MySql book' is product name and 'MS09210' is the product code while '10.99' is the 2 decimal significant price.
+
+
+
+
+
+
+
+
+-   Tables Used:=
+    
+    -	student  (recid, name)
+
+    -   studentdetail (recid, studentid, standard, flagsex)
+
+    -   studentpresent (recid, studentid, month, present)
+
+    -   studenthours (recid, studentid, datex, hours)
+
+    -   product (recid, name)
+
+    -   productprice (recid, productid, code, effdt, price)
+
+
+
+Q-1 Write a query which will print name of each student, and his or her attendance report for current month. 
+Fields : Name, Attendance Report for Current Month
+
+	Under "Attendance Report for Current Month" column:
+		if 'studentpresent.present' is less than or equal to 7 print "Poor", 
+		if 'studentpresent.present' is more than 7 and less than or equals 15 print "Good", 
+		if 'studentpresent.present' is more than 15 and less than or equals 20 print "Better", 
+		if 'studentpresent.present' is more than 20 print "Best".
+
+
+
+Q-2 Write a query to print student name, total number of hours for Jan, Feb, March month. Information for each student should be printed in a single row.
+
+	Fields : Name, Working Hours for Jan, Working Hours for Feb, Working Hours for March
+
+	See following example:
+	Name		Working Hours for Jan	Working Hours for Feb	Working Hours for March
+	Minesh		80			70			90
+	Reena		70			80			90
+
+
+
+Q-3 Print information for the student having name like "Mira", "Kabir", "Om", "Manas"
+	Fields: Name, Standard
+
+
+Q-4 Print information for the student having name other than "Mira", "Kabir", "Om", "Manas"
+	Fields: Name, Standard
+
+
+Q-5 Print information for the student having presence for Jananuary between 20 to 25.
+	Fields: Name, Standard, Present
+
+
+Q-6 Print information for the student having charcter "r" at the third position of their name.
+	Fields: Name, Standard
+	Eg: It should print information for "Mira", "Gira" etc.
+
+
+Q-7 Print information for the student having "bhai" in their name. 
+	Fields: Name, Standard
+
+
+Q-8 Print information for the student who do not have any presence in the college.
+	Fields: Name, Standard
+
+
+Q-9 Write a query which will print name of each student, and his or her attendance report for current month. 
+	Fields : Name, Attendance Report for Current Month
+
+	In "Attendance Report for Current Month" column 
+	if student has presence for that month then print "Present"
+	else print "Not Present".
+
+Q-10 Execute following queries and evaluate the output by giving appropriate reason.
+	SELECT STRCMP('text', 'text2');
+	SELECT STRCMP('text2', 'text');
+	SELECT STRCMP('text', 'text');
+
+
+Q-11 Print the student information having average presence (in percentage) for Jan, Feb and March between 60 to 75.
+	Fields: Name, Standard, Present
+
+
+Q-12 List information of the product having "Maximum Price" within date range 01-01-2006 to 15-01-2006
+
+
+
+
+
+
+
+
+
+Assignment - 6 
+
+-   Tables Used:=
+    
+    -	student  (recid, name)
+
+    -   studentdetail (recid, studentid, standard, flagsex)
+
+    -   studentpresent (recid, studentid, month, present)
+
+    -   studenthours (recid, studentid, datex, hours)
+
+    -   product (recid, name)
+
+    -   productprice (recid, productid, code, effdt, price)
+
+
+-   Write queries for following requirements:
+
+Q-1 Print total number of boys and girls within a single record.
+	Fields : Boys, Girls
+
+	Required Output:
+	================
+	Boys	Girls
+	5	3
+
+
+Q-2 Find total number of Hours for Boys and Girls. 
+	Fields : Gender, Present(Hrs)
+
+	Required Output:
+	================
+	Gender	Present(Hrs)
+	Boys	100
+	Girls	120
+
+
+Q-3 Find all latest prices for each code for each product.
+	Fields : Product Name, Code, Date, Price
+
+	Required Output:
+	================
+	Product Name	Code	Date		Price
+	Computer	COMP	2007-01-01	Rs. 24,000/-
+
+
+
+
+
+
+
+    Assignment - 7
+
+
+    Q-1 Write a query which will output 123,456.78(as string datatype) for the input value of 123456.77912.
+
+
+Q-2 What will be the output of following query : (Explain the result)
+	SELECT INSERT("newyork", 4, 4, "jercy");
+
+
+Q-3 Write a query to find position of letter 'd' in the string 'abcdefgh'.
+
+
+Q-4 Write a query which will output "hello world" for input string "Hello World".
+
+
+Q-5 Write a query to find 3 characters from the left of any given string.
+
+
+Q-6 Write a query to find 3 characters from the right of any given string.
+
+
+Q-7 Write a query which will return length of any given string.
+
+
+Q-8 Write a query which will output "------abcd" for input string "abcd".
+
+
+Q-9 Write a query which will output "abcd......" for input string "abcd".
+
+
+Q-10 Write a query which will output "abcd  " for input string "  abcd  ".
+
+
+Q-11 Write a query which will output "  abcd" for input string "  abcd  ".
+
+
+Q-12 Write a query which will output "is" for input string "The weather is very nice.".
+
+
+Q-13 Write a query which will output "hellohellohello" for input string "hello".
+
+
+Q-14 Write a query which will output ".ecin yrev si rehtaew ehT" for input string "The weather is very nice.".
+
+
+Q-15 Explain the use of function SOUNDEX().
+
+
+Q-16 Write a query which will output "is very nice." for input string "The weather is very nice.".
+
+
+Q-17 Explain the use of TRIM function.
+
+
+
+
+
+
+
