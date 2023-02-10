@@ -1,0 +1,213 @@
+
+
+/* 1TABLE OF student  (recid, name) */
+
+CREATE TABLE SATISH_student
+(
+    recid INT,
+    name VARCHAR(250)
+);
+select *
+from SATUDSATISH_studentENT;
+INSERT INTO SATISH_student
+    (recid, name)
+VALUES
+    (101, 'John Doe'),
+    (102, 'satish'),
+    (103, 'ankit'),
+    (104, 'amit'),
+    (105, 'adanan'),
+    (106, 'sanjay'),
+    (107, 'path Doe'),
+    (108, 'sandeep'),
+    (109, 'Johi singh'),
+    (110, 'satish'),
+    (111, 'adiyta'),
+    (112, 'allu'),
+    (113, 'pankaj Doe'),
+    (114, 'sumit'),
+    (115, 'bitu'),
+    (116, 'calu'),
+    (117, 'kesari'),
+    (118, 'indal'),
+    (119, 'diku'),
+    (120, 'emphila');
+
+
+
+
+
+
+
+/* 2TABLE OF studentdetail (recid, studentid, standard, flagsex)*/
+
+CREATE TABLE Satish_studentdetail
+(
+    recid INT,
+    studentid INT,
+    standard INT,
+    flagsex VARCHAR(50)
+);
+select *
+from Satish_studentdetail;
+INSERT INTO Satish_studentdetail
+    (recid, studentid, standard, flagsex)
+VALUES
+    (501, 11, 10, 'Male'),
+    (502, 22, 9, 'Female'),
+    (501, 13, 10, 'Male'),
+    (503, 24, 9, 'Female'),
+    (504, 15, 10, 'Male'),
+    (505, 26, 9, 'Female'),
+    (506, 18, 10, 'Male'),
+    (507, 20, 9, 'Female'),
+    (508, 17, 10, 'Male'),
+    (509, 23, 9, 'Female'),
+    (510, 16, 10, 'Male'),
+    (511, 29, 9, 'Female'),
+    (512, 14, 10, 'Male'),
+    (513, 25, 9, 'Female'),
+    (514, 19, 10, 'Male'),
+    (515, 21, 9, 'Female');
+
+
+
+
+
+
+/* 3TABLE OF studentpresent (recid, studentid, month, present)*/
+
+CREATE TABLE Satish_studentpresent
+(
+    recid INT,
+    studentid INT,
+    month VARCHAR(30),
+    present VARCHAR(50)
+
+);
+INSERT INTO Satish_studentpresent
+    (recid, studentid, month, present)
+VALUES
+    (141, 111, 'Jan', 'yes'),
+    (142, 112, 'feb', 'no'),
+    (143, 113, 'march', 'yes'),
+    (144, 114, 'april', 'no'),
+    (145, 115, 'may', 'yes'),
+    (146, 116, 'jun', 'no'),
+    (147, 117, 'july', 'yes'),
+    (148, 118, 'August', 'no'),
+    (149, 119, 'September', 'yes'),
+    (150, 120, 'October', 'no'),
+    (151, 121, 'Nov', 'yes'),
+    (152, 122, 'Dec', 'no'),
+    (153, 123, 'Jan', 'no'),
+    (154, 124, 'feb', 'yes'),
+    (155, 125, 'march', 'no'),
+    (156, 126, 'april', 'yes');
+
+select * from Satish_studentpresent;
+
+
+
+
+
+
+/* 4TABLE OF studenthours (recid, studentid, datex, hours) */
+
+CREATE TABLE Satish_studenthours
+(
+    recid INT,
+    studentid INT,
+    datex DATE,
+    hours INT,
+);
+INSERT INTO Satish_studenthours
+    (recid, studentid, datex, hours)
+VALUES
+    (412, 251, '2023-03-02', 9),
+    (413, 252, '2023-11-27', 5),
+    (414, 253, '2021-12-31', 0),
+    (415, 254, '2020-09-30', 1),
+    (417, 255, '2020-02-29', 3),
+    (418, 256, '2019-02-27', 8),
+    (416, 257, '2022-01-25', 7),
+    (418, 258, '2022-01-01', 3),
+    (421, 259, '2022-01-24', 4),
+    (412, 260, '2021-01-23', 5),
+    (481, 261, '2019-07-22', 8),
+    (420, 262, '2018-06-31', 7),
+    (412, 263, '2012-05-02', 6),
+    (412, 264, '2017-04-20', 3),
+    (416, 265, '2016-03-19', 4),
+    (411, 266, '2015-02-08', 2),
+    (411, 267, '2014-01-02', 9);
+
+
+select * from Satish_studenthours;
+
+
+
+
+
+/* 5TABLE OF product (recid, name)*/
+
+CREATE TABLE Satish_product
+(
+    recid INT,
+    name VARCHAR(255)
+);
+select * from Satish_product;
+INSERT INTO Satish_product
+    (recid, name)
+VALUES
+    (191, 'mobile'),
+    (192, 'leptop'),
+    (193, 'mobile'),
+    (194, 'charger'),
+    (195, 'headphone'),
+    (196, 'wired'),
+    (197, 'wireless'),
+    (198, 'bluetooth'),
+    (198, 'carrybag'),
+    (1911, 'ladisperse'),
+    (1912, 'wallet'),
+    (1923, 'bud'),
+    (1914, 'kalu'),
+    (1925, 'kismiss'),
+    (1916, 'iron'),
+    (1927, 'pen'),
+    (1918, 'notebook'),
+    (1929, 'bottale');
+
+
+
+
+
+/*6TABLE OF productprice (recid, productid, code, effdt, price) */
+
+CREATE TABLE Satish_productprice
+(
+    recid INT,
+    productid INT,
+    code INT,
+    effdt date,
+    price INT
+);
+select * from Satish_productprice;
+INSERT INTO Satish_productprice
+    (recid, productid, code, effdt, price)
+VALUES
+    (161, 182, 10, '2013-10-25', 127),
+    (162, 181, 11, '2013-10-24', 102),
+    (163, 180, 12, '2013-10-23', 109),
+    (164, 179, 13, '2013-10-22', 108),
+    (165, 178, 14, '2013-10-21', 107),
+    (166, 177, 15, '2013-10-26', 106),
+    (167, 176, 16, '2013-10-27', 105),
+    (168, 175, 17, '2013-10-28', 104),
+    (169, 174, 18, '2013-10-21', 901),
+    (170, 173, 19, '2013-10-18', 102),
+    (171, 172, 20, '2013-10-20', 10),
+    (172, 171, 11, '2013-10-04', 101);
+    
+
