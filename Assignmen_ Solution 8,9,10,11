@@ -1,0 +1,762 @@
+
+-------------------------------------ASSIGNMENT - 8 -----------------------------
+
+-- I want to add 3 days to the current date. Write all possible queries to perform this operation. Explain each one of them.
+
+SELECT DATE_ADD("2023-02-13", INTERVAL
+3 day);
+SELECT DATE_ADD(CURDATE(), INTERVAL
+3 day);
+
+
+
+-- Q-2	I want to add 3 years to the current date. Write all possible queries to perform this operation. Explain each one of them.
+SELECT DATE_ADD("2023-02-13", INTERVAL
+3 MONTH);
+SELECT DATE_ADD(CURDATE(), INTERVAL
+3 month);
+
+
+
+
+-- Q-3	I want to add 3 months to the current date. Write all possible queries to perform this operation. Explain each one of them.
+SELECT DATE_ADD("2023-02-13", INTERVAL
+3 year);
+SELECT DATE_ADD(CURDATE(), INTERVAL
+3 year);
+
+
+
+-- Q-4. I want to deduct 2 days from the current date.  Write all possible queries to perform this operation. Explain each one of them.
+SELECT DATE_ADD("2023-02-13", INTERVAL -2 DAY);
+SELECT DATE_ADD(CURDATE(), INTERVAL -2 DAY);
+SELECT DATE_SUB(CURDATE(), INTERVAL
+2 DAY);
+
+
+
+-- Write a query to add 5 days and 15 hours to date and time "2007-01-26 12:30:45".
+SELECT DATE_ADD(ADDTIME("2007-01-26 12:30:45", "15:00:00"), INTERVAL
+5 DAY);
+
+
+
+-- Q-6	Write all possible queries which will return current date.
+SELECT CURDATE();
+SELECT CURRENT_DATE
+();
+SELECT DATE("2023-02-13");
+SELECT NOW();
+--- It will give current date and time both
+
+
+-- Q-7	Write all possible queries which will return current time.
+SELECT NOW();
+SELECT CURRENT_TIME
+();
+SELECT CURTIME();
+
+-- Q-8	Input Date is "2007-01-26 12:30:45". Write queries to output following date formats:
+
+-- 	- "January 26, 2007"
+-- 	- "The 26th of January"
+-- 	- 2007
+-- 	- 07
+-- 	- 26/1/7
+-- 	- 26/01/07
+-- 	- 26/01/2007
+-- 	- 01/26/07
+-- 	- 26/01/07 12:30:45
+-- 	- 26/01/07 12:30:45 PM
+
+
+-- 	---> "January 26, 2007"
+SELECT DATE_FORMAT("2007-01-26", " %M %e, %Y");
+--->  % e	Day of the month as a numeric value (0 to 31)
+----> %Y	Year as a numeric, 4-digit value
+
+---> "The 26th of January"
+SELECT DATE_FORMAT("2007-01-26", "  The " "%eth of %M ");
+---> %M	Month name in full (January to December)
+
+
+----> 2007
+SELECT DATE_FORMAT("2007-01-26", " %Y ");
+------> %Y	Year as a numeric, 4-digit value
+
+-----> 07
+SELECT DATE_FORMAT("2007-01-26", " %y ");
+----> %y	Year as a numeric, 2-digit value
+
+
+----> 26/1/7
+SELECT DATE_FORMAT("2007-01-26", " %d/%c/%y");
+--> %c	Numeric month name (0 to 12) ,  
+
+
+--->26/01/07
+SELECT DATE_FORMAT("2007-01-26", " %d/%m/%y ");
+--->%d	Day of the month as a numeric value (01 to 31), 
+---->%m	Month name as a numeric value (00 to 12)
+
+-----> 26/01/2007
+SELECT DATE_FORMAT("2007-01-26", " %d/%m/%Y ");
+
+
+
+------>01/26/07
+SELECT DATE_FORMAT("2007-01-26", " %m/%d/%y ");
+
+
+
+------>--- 26/01/07 12:30:45
+SELECT DATE_FORMAT("2007-01-26 12:30:45",  " %d/%m/%y %H:%i:%s");
+
+
+
+----=---> 26/01/07 12:30:45 PM
+SELECT DATE_FORMAT("2007-01-26 12:30:45",  " %d/%m/%y %H:%i:%s %p");
+-----> %p for pm
+
+
+
+
+
+-- Input Date is "2007-01-26 12:30:45". Write queries to output following date formats:
+
+-- 	- Friday
+-- 	- 26 (Explanation: 26th day of the month)
+-- 	- 6 (Explanation: 6th day of the week)
+-- 	- 26 (Explanation: 26th day of the year)
+
+
+-- 	- Friday
+SELECT DATE_FORMAT("2007-01-26 12:30:45",  " %W");
+
+
+-- 	- 26 (Explanation: 26th day of the month)
+SELECT DATE_FORMAT("2007-01-26 12:30:45",  " %d");
+
+
+
+---> 6 (Explanation: 6th day of the week)
+SELECT DATE_FORMAT("2007-01-26 12:30:45",  " %w");
+----> %w	Day of the week where Sunday=0 and Saturday=6
+
+
+--------->--26 (Explanation: 26th day of the year)
+SELECT DATE_FORMAT("2007-01-26 12:30:45",  " %j");
+---> %j	Day of the year (001 to 366)
+
+
+
+
+
+
+-- Q-10 Explain UNIX_TIMESTAMP and FROM_UNIXTIME functions with examples.
+
+select UNIX_TIMESTAMP()
+-----> it's count the total second upto current time from 1970/01/01 12:00:00
+
+select FROM_UNIXTIME(21202510)
+----> it's tell the date and time for given second as 21202510
+
+
+
+---Q-11	Write the output of the following query and explain it.
+
+SELECT PERIOD_ADD(200601, 3);
+---> it will add 3 in given value as 200601 ---> ans. 200601 + 3 = 200604
+
+
+
+--->Q-12 Write the output of the following query and explain it.
+
+SELECT PERIOD_DIFF(200601, 200609);
+----> it will retun Diffrence ans  200601-200609  = -8
+
+
+--->Q.-13   Explain the use of "LAST_INSERT_ID()" function in real life applications.
+
+SELECT LAST_INSERT_ID(50);
+------> it will last inserted value as 50
+
+
+
+
+
+
+
+
+
+
+
+
+-------------------------------------ASSIGNMENT-9 -------------------------------------------
+
+
+
+CREATE TABLE newstudentS
+(
+  recid int,
+  surname VARCHAR(250),
+  firstname VARCHAR(50),
+  middlename VARCHAR(30),
+  gender VARCHAR(50),
+  admitdate DATE,
+  endeffdt DATE
+);
+
+INSERT INTO newstudentS
+  (recid, surname, firstname, middlename, gender, admitdate, endeffdt)
+VALUES
+  (101, 'singh', 'John', 'Doe', 'Male', '2023-02-01', '202205-02' ),
+  (102, 'singh', 'Satish', 'kumar', 'Male', '2021-05-03', '202106-03' ),
+  (103, 'singh', 'Anuj', 'kumar', 'Male', '2022-01-01', '2022-01-02' ),
+  (104, 'singh', 'shreya', 'kumari', 'feMale', '2020-08-03', '2020-09-03' ),
+  (105, 'singh', 'rinku', 'kumari', 'feMale', '2019-06-04', '2019-07-04' ),
+  (106, 'sahni', 'krima', 'santam', 'feMale', '2023-08-05', '2022-08-22' ),
+  (107, 'sahni', 'Mira', 'santam', 'feMale', '2023-08-05', '2022-08-22' ),
+  (108, 'sah', 'Jira', 'Sahi', 'feMale', '2023-08-05', '2022-08-24' );
+
+
+
+
+-- Q-1	List out the information of students whose surname is "Shah"
+select concat(surname,'  ', firstname, '  ', middlename) as "Name"
+from newstudentS
+where surname = 'singh';
+
+
+
+-- Q-2	List out the information of all the Male students.
+select concat(surname,'  ', firstname, '  ', middlename) as "Name"
+from newstudentS
+where  gender = 'Male';
+
+
+-- Q-3	List out the information of all the Female students, whose surname is "Patel" or have 	been admitted after than 1-Jan-2006.
+select concat(surname,'  ', firstname, '  ', middlename) as "Name", surname, admitdate
+from newstudentS
+where gender = 'feMale' and surname = 'Singh';
+
+
+--Q-4  List out the information of all the students whose second name ends with "Bhai"
+select concat(surname,'  ', firstname, '  ', middlename) as "Name"
+from newstudentS
+where middlename  like  '%kumar';
+
+
+-- Q-5	List out the information of all the students whose first name starts with "M" and second name has "ant".
+
+select concat(surname,'  ', firstname, '  ', middlename) as "Name"
+from newstudentS;
+where middlename  like  '%kumar';
+
+
+--  Q-6	List out the information of all the students whose surname has "n" in the third place.
+select concat(surname,'  ', firstname, '  ', middlename) as "Name"
+from newstudentS;
+where surname  like  '_n%';
+
+
+
+-----Q-7	List the name's of the all the students in "Ekta R. Patel" format.
+select concat(firstname, UPPER(substring (1,1)), middlename) as "Ekta R. Patel"
+from newstudentS;
+
+
+-- Q-8	List out First Name as well as its respective length for all the students.
+select firstname, LENGTH(firstname) as "Length of Name"
+from newstudentS
+;
+
+
+-- Q-9	Append the First Name with "bhai" for all the male students whose First Name does not 	contain "bhai".
+update newstudentS set firstname = concat(firstname, 'bhai')  where  firstname not like '%bhai' and gender='male';
+
+
+-- Q-10	List out First Name of all the male students with "Mr." before the First Name.
+select concat('Mr', ' ', firstname ) as "FirstName"
+from newstudentS
+where gender  = 'Male';
+
+
+-- Q-11	List out First Name of all the students which sounds like "Mira".
+select concat(surname,'  ', firstname, '  ', middlename)
+from newstudentS
+where sound like 'Mira';
+
+
+
+
+
+
+
+-------------------------------------ASSIGNMENT-10 -------------------------------------------
+
+
+
+---> Table2
+CREATE TABLE Saddress
+(
+  recid int NOT NULL,
+  address1 VARCHAR(250),
+  address2 VARCHAR(50),
+  city VARCHAR(50),
+  county VARCHAR(50),
+  postalcode int,
+  country VARCHAR(50) ,
+  primary key (recid)
+);
+
+select *
+from Saddress;
+INSERT INTO Saddress
+
+VALUES
+  (84121, 'patna_GNo.1', 'purabTola', 'up', 'Patna', 841242, 'India'),
+  (84122, 'patna_GNo.2', 'purabTola2', 'maharasta', 'Patna', 841245, 'maxico'),
+  (84123, 'patna_GNo.3', 'purabTola3', 'Andra', 'Patna', 841249, 'India'),
+  (84124, 'patna_GNo.4', 'purabTola4', 'odisha', 'Patna', 8412412, 'India'),
+  (84125, 'patna_GNo.5', 'purabTola5', 'gujrat', 'Patna', 841262, 'India');
+
+
+
+
+
+
+
+---->Tabl1
+
+
+CREATE TABLE Sofficestaff
+(
+  recid int NOT NULL,
+  name VARCHAR(250),
+  designation VARCHAR(50),
+  salary int,
+  overtimesalary int,
+  bossno int,
+  addressid int ,
+  primary key (recid),
+  FOREIGN key(addressid) REFERENCES  Saddress(recid)
+);
+
+select *
+from Sofficestaff;
+
+INSERT INTO Sofficestaff
+  (recid , name, designation, salary, overtimesalary, bossno, addressid)
+VALUES
+  (201, 'Satish Singh', 'Software Engineer', 5000, 8000, 058, 84121 ),
+  (202, 'anuj singh', 'Mechanical Engineer', 3000, 6000, 058, 84122 ),
+  (203, 'sumit', 'Electrical Engineer', 2000, 5000, 058, 84123 ),
+  (204, 'Ankita', 'Electronic Engineer', 1000, 3000, 058, 84124 ),
+  (205, 'john Doe', 'Civil Engineer', 1500, 4000, 058, 84125 );
+
+
+
+-- Write queries for following requirements:
+
+-- Q-1	List Name, Designation and Salary of all "officestaff" members.
+
+select name, designation, salary
+from Sofficestaff;
+
+
+-- Q-2	List Name and Salary of all the people who are working as "Programmer".
+select name, salary
+from Sofficestaff
+where designation='Software Engineer'
+;
+
+
+
+-- Q-3	List all the information about those people who are earning less than Rs.10,000/- .
+select name, salary
+from Sofficestaff
+where salary<=10000
+;
+
+
+
+-- Q-4	List all the information about those staff members who fall in the salary range of 	Rs.5000/- to Rs.10,000/- .
+select name, salary
+from Sofficestaff
+where salary between 5000 and 10000
+;
+
+
+
+-- Q-5	List Name of all the office staff members in Lower Case.
+select lower(name)
+from Sofficestaff
+;
+
+
+
+-- Q-6	List Name of all the office staff members in following format:
+-- 	For example, if name is "umeshbhai" then display it in the format "Umeshbhai".
+select CONCAT(UPPER(SUBSTRING(name,1,1)),LOWER(SUBSTRING(name,2))) as name
+from Sofficestaff;
+
+
+
+-- Q-7	List all the information about those people who works for "Nileshbhai".
+select *
+from Sofficestaff
+where bossno=058;
+
+
+
+-- Q-8	List all the information about those members with salary greater than or equal to Rs.3000/- or working directly under "Nileshbhai".
+select *
+from Sofficestaff
+where salary>=3000 and name="Nileshbhai";
+
+
+
+
+-- Q-9	List Name, Salary, Over-time Salary of all the office staff members.
+select name, salary, overtimesalary
+from Sofficestaff;
+
+
+
+-- Q-10	Perform above MySQL statement again, but now 0(Zero) should be substituted for NULL in 	Over-time Salary field.
+select name, salary, overtimesalary
+from Sofficestaff
+where overtimesalary=0;
+
+
+-- Q-11	List Name and Total Monthly Salary (Salary + Over-time Salary) of all the office staff 	members.
+select name, salary+overtimesalary as "monthly Sallary"
+from Sofficestaff;
+
+
+-- Q-12	List Name and Total Annual Salary of all the office staff members.
+select name, (salary*12) as "Anual_sllary"
+from Sofficestaff;
+
+
+-- Q-13	List Name and Total Daily Salary of all the office staff members. (Consider a month is 	of 30 days).
+select name, (salary/30) as "Daily Salary"
+from Sofficestaff;
+
+
+-- Q-14	List all the information of the person earning Highest Salary (Salary + Over-time 	Salary) in the staff.
+select name, max(salary+overtimesalary) as "Highest Salary"
+from Sofficestaff;
+
+
+-- Q-15	List all the information of the person earning Least Salary (Salary + Over-time Salary) 	in the staff.
+select name, min(salary+overtimesalary) as "Minimam Salary"
+from Sofficestaff;
+
+
+-- Q-16	List all the information about those who earn the Highest Salary (Salary + Over-time 	Salary) and those who earn the Least Salary (Salary + Over-time Salary) in the staff.
+select max(salary+overtimesalary) as Highest_Salary , min(salary+overtimesalary) as Least_Salary
+from Sofficestaff;
+
+
+-- Q-17	List all the information about the person who earns more than his boss.
+select *
+from trainee.Manish_officestaff
+where salary>(select salary
+  from trainee.Manish_officestaff
+  where name='Nishant' and bossno=0)and bossno=(select recid
+  from trainee.Manish_officestaff
+  where name="Nishant" and bossno=0);
+
+-- Q-18	List Name, Designation, Salary and City of each staff member.
+select st.name, st.designation, st.salary, a1.city
+from Sofficestaff st inner join Sofficestaff a1 on st.recid=a1.recid;
+
+-- Q-19	Using "address" table list total number of persons residing in "Ahmedabad" city.
+select count(recid)
+from trainee.Manish_address
+where city="Ahmedabad";
+
+-- Q-20	List those City Name where 3 or more than 3 people resides.
+select city
+from trainee.Manish_address
+group by city
+having count(city)>3
+;
+
+
+
+
+
+
+
+
+
+---------------------Assignment -----11---------------------------------
+
+------------------------------------Questiom ---11-------------------
+-- Table Used: 
+-- ===========
+-- student (recid, rollno, fname, sname, surname, admitdate, birthdate, standard, sex)
+
+
+-- Write a query for following requirement:
+-- =======================================
+
+-- Q-1	Display Full Name of all the male students whose first name ends with "h" and are admitted between 1st January 2006 to 1st August 2006.
+
+-- 	Eg:
+
+-- 	|----------------------|
+-- 	|FULL NAME	       |	
+-- 	|----------------------|
+-- 	|Kamlesh Rajubhai Patel|
+-- 	------------------------
+
+-- 	Here "Kamlesh" is the value of 'fname' column, "Rajubhai" of 'sname' and "Patel" of 'surname' column. And first character is in capital for fname, sname, surname and each column value is separated by single space.
+
+
+
+
+
+-- Tables Used:
+-- ===========
+
+-- 1) product (recid, mfrid, description, price, qtyonhand)
+
+-- 2) orders (recid, customerid, orderdate, salesrepsid, productid, qty, amount)
+
+-- 3) customer (recid, company, salesrepsid, creditlimit)
+
+-- 4) salesreps (recid, name, officeid, designation, hiredate, manager, quota, sales, age)
+
+-- 5) office (recid, city, region, manager, targetsales, actualsales)
+
+
+
+-- Write queries for below requirements:
+-- =====================================
+
+-- Q-1	Find Name of all those sales representatives whose offices are in cities ending with 
+-- 	"pur" and who have atleast 2 customers. The sales representative must be hired before 
+-- 	1st January 2006 and his/her minimum age should be 21 yrs.
+
+-- 	Display fields : Sales Rep. Name, Office City, No. of Customers, Hired on
+
+
+
+-- Q-2	Find following information for each customer:
+
+-- 	Display fields : Company Name, Sales Rep. Name, Sales Rep. Office City, Company Credit
+
+
+
+-- Q-3	Find following information for each office:
+
+-- 	Office city, Total Sales Rep., Total sale by all sales Rep.,
+-- 	Target Sales, Actual Sales, Difference of Target and Actual Sales.
+
+-- 	Display fields : Office City, No. of Sales Rep., Total Sale, Target Sales, Actual  Sales, Difference.
+
+
+
+-- Q-4	Find following information for each product:
+
+-- 	Product description, Price, Quantity on hand, Total no. of 
+-- 	orders for each product, Total quantity ordered, Total amount of the orders for each product.
+
+-- 	Display fields : Description, Price, Quantity, Orders, Quantity, Total Amount
+
+
+
+-- Q-5	Find order details for all the customers. There will be one row per customer displaying 	
+-- 	total quantity ordered by them and the amount spent by each customer.
+	
+-- 	Display fields : Company Name, Total Quantity Ordered, Total Amount
+
+
+
+-- Q-6	Display all the sales representatives hired within the past five years from today along with thier Quota and 
+-- 	Sales information.
+	
+-- 	Display fields : Sales Rep. Name, Hired on, Quota, Sales
+	
+
+
+-- Q-7	Find total number of customers for all the products ordered. There will be one row per 	
+-- 	order displaying product description, and total number of customers who have ordered 	that product.
+
+-- 	Display fields : Product Description, Total No. of Customers who Ordered this Product.
+
+
+-------------------------------------------------------------------------------------------------------------------  
+create table trainee.Manish_Student1
+(
+  recid int
+  auto_increment primary key ,
+rollno int not null,
+fname varchar
+  (15) not null,
+sname varchar
+  (15) not null,
+surname varchar
+  (15) not null,
+admitdate date not null,
+birthdate date not null,
+standard varchar
+  (15) not null,
+sex varchar
+  (12)
+);
+  insert into trainee.Manish_Student1
+    (rollno,fname,sname,surname,admitdate,birthdate,standard,sex)
+  values
+    (101, "Manish", "Kailash", "Yadav", '2022-01-10', '2000-10-10', "12th", "Male");
+  Q-1.
+  select concat( fname,' ' ,sname,' ',surname) as "full Name"
+  from trainee.Manish_Student1;
+  create table product :-
+  create table trainee.Manish_Product1
+  (
+    recid int
+    auto_increment primary key,
+mfrid int not null,
+description varchar
+    (15) not null,
+price int not null,
+qtyonhand int not null
+);
+    insert the
+    table in Product1
+    insert into trainee.Manish_Product1
+      (mfrid,description,price,qtyonhand)
+    values(101, "Dell Leptop", 50000, 1);
+    create table  office1
+    create table trainee.Manish_office1
+    (
+      recid int
+      auto_increment primary key,
+city varchar
+      (15) not null,
+region varchar
+      (20) not null ,
+manager varchar
+      (15) not null,
+targetsales int not null,
+actualsales int not null
+);
+      insert table
+      office
+      insert into trainee.Manish_office1
+        (city,region,manager,targetsales,actualsales)
+      values
+        ("Surat", "Gujarat", "Manish", 10, 5);
+      create table salesreps
+      create table trainee.Manish_salesreps1
+      (
+        recid int
+        auto_increment primary key ,
+name varchar
+        (20) not null,
+designation varchar
+        (10),
+hiredate date not null,
+manager varchar
+        (20) not null, 
+quota varchar
+        (20) not null,
+sales int not null,
+age int not null,
+officeid int not null references Manish_office1
+        (recid)
+);
+        insert table
+        salesreps
+        insert into trainee.Manish_salesreps1
+          (name,designation,hiredate,manager,quota,sales,age,officeid)
+        values
+          ("Mitesh", "No", '2023-12-19', "Manish", "govt", 15, 20, 1);
+        create table customer
+        create table trainee.Manish_customer1
+        (
+          recid int
+          auto_increment primary key,
+company varchar
+          (20) not null,
+creditlimit int not null,
+salesrepsid int not null references Manish_salesreps1
+          (recid)
+);
+          insert table
+          Manish_customer
+          insert into trainee.Manish_customer1
+            (company,creditlimit,salesrepsid)
+          values
+            ("Squad", 50000, 1);
+          create table orders
+          create table trainee.Manish_orders1
+          (
+            recid int
+            auto_increment primary key ,
+customerid int references Manish_customer1
+            (recid),
+orderdate date not null,
+salesrepsid int references Manish_salesreps1
+            (recid),
+productid int references Manish_Product1
+            (recid),
+qty int not null,
+amount int not null
+);
+            insert the
+            table
+            insert into trainee.Manish_orders1
+              (customerid,orderdate,salesrepsid,productid,qty,amount)
+            values(1, '2023-12-23', 1, 1, 10, 25000);
+            Q-1.
+            Ans:
+            -
+            select s.name as 'Name', o.city as 'city', count(cust.salesrepsid) as 'no. of customer', s.hiredate as 'hiredate'
+            from trainee.Manish_salesreps1 s join trainee.Manish_office1 o ON o.recid = s.officeid join trainee.Manish_customer1 cust on cust.salesrepsid = s.recid
+            where (city like '%pur') and (hiredate < '2006-01-01' and age >= 21) and ((select salesrepsid
+              from trainee.Manish_customer1 c join trainee.Manish_salesreps1 sr on sr.recid = c.salesrepsid
+              where sr.recid= c.salesrepsid
+              GROUP BY c.salesrepsid
+              having COUNT(c.salesrepsid)>2) = s.recid)
+            GROUP BY s.name,o.city,s.hiredate;
+            Q-2.
+            Ans:
+            -
+            select company as"Company Name", name as "Sales Rep. Name", sales as "Sales Rep.", city as  "Office City", creditlimit as "Company Credit"
+            from trainee.Manish_salesreps1 sale inner join trainee.Manish_office1  as off join trainee.Manish_customer1 as cust on sale.officeid=off.recid and sale.recid=salesrepsid 
+            ;
+            Q-3.
+            Ans:
+            -
+            select city as "Office City", sales as  "No. of Sales Rep.", count(actualsales) as "Total Sale", targetsales as "Target Sales", actualsales as " Actual  Sales", PERIOD_DIFF(targetsales,actualsales) as "Difference."
+            from trainee.Manish_salesreps1 sale inner join trainee.Manish_office1  as off on sale.officeid=off.recid
+            group by off.recid;
+            Q-4.
+            Ans:
+            -
+            select description , price , qty as "Quantity" , orderdate as "Orders", price as "Total Price"
+            from trainee.Manish_Product1 po inner join trainee.Manish_orders1 od on po.recid=od.productid;
+            Q-5.
+            Ans:
+            -
+            select company as "Company Name", qty as "Total Quantity Order", amount
+            from trainee.Manish_orders1 od inner join trainee.Manish_customer1 cust on od.productid=cust.recid
+            group by company;
+            Q-6.
+            Ans:
+            -
+            select sales as "Sales Rep.", name, hiredate as "Hired on", quota as "Quota", sales
+            from trainee.Manish_salesreps1
+            where hiredate>=(ADDDATE(curdate(), INTERVAL -5 year))
+            ;
+            Q-7.
+            Ans:
+            -
+            select description, count(cust.recid) as "Total No. of Customers who Ordered this Product"
+            from trainee.Manish_customer1 cust inner join trainee.Manish_Product1 po  ;
