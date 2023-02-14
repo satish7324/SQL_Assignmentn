@@ -1,0 +1,874 @@
+
+;
+Q-7.
+Ans:
+-
+select description, count(cust.recid) as "Total No. of Customers who Ordered this Product"
+from trainee.Manish_customer1 cust inner join trainee.Manish_Product1 po 
+;
+
+
+
+
+
+
+Assignment ---------10
+
+
+- Q-17	List all the information about the person who earns more than his boss.
+select *
+from S_officestaff
+where salary>(select salary
+    from Sofficestaff
+    where name='Satish Singh' and bossno=058)and bossno=(select recidfrom Sofficestaff
+    where name="anuj singh" and bossno=058);
+
+-- Q-18	List Name, Designation, Salary and City of each staff member.
+select st.name, st.designation, st.salary, a1.city
+from Sofficestaff st inner join Sofficestaff a1 on st.recid=a1.recid;
+
+
+
+------------------------Assignment----12----------------------------
+
+Q-1.
+Ans:
+-
+select name , amount
+from trainee.Manish_orders1 od , trainee.Manish_salesreps1 sales
+where amount>=25000
+group by sales.name;
+Q-2.
+Ans:
+-
+select *
+from S_customer cust inner join S_salesreps sales on cust.salesrepsid=sales.recid;
+Q-3.
+Ans:
+-
+select *
+from trainee.Manish_salesreps1 sales inner join trainee.Manish_orders1 od join trainee.Manish_customer1 cust on cust.salesrepsid=od.salesrepsid  =sales.recid
+group by name;
+Q-4.
+Ans:
+-
+select name , avg(amount)
+from trainee.Manish_orders1 as od inner join trainee.Manish_salesreps1 as sales on od.salesrepsid=sales.recid
+where amount>=30000
+group by name
+;
+Q-5.
+Ans:
+-
+select *
+from trainee.Manish_salesreps1
+where age>=40 and quota='govt'
+;
+Q-6.
+Ans:
+-
+select *
+from trainee.Manish_customer1 as cust inner join trainee.Manish_salesreps1 as sales join trainee.Manish_office1 as off on sales.recid=cust.salesrepsid and sales.officeid=off.recid 
+where region like "Gujarat";
+Q-7.
+Ans:
+-
+select sum(quota) as Quota
+from trainee.Manish_salesreps1 as sale inner join Manish_office1 as of on sale.officeid=of.recid;
+Q-8.
+Ans:
+-
+select *
+from trainee.Manish_salesreps1 as sale inner join trainee.Manish_orders1 as od join trainee.Manish_reportsto2 as p on od.salesrepsid=sale.recid and sale.recid=p.salespersonid 
+where managingsalespersonid>=56;
+
+
+
+
+
+-----------------------------------------Assignment-11------------------------------------
+
+
+
+
+-- Table Used: 
+-- ===========
+-- student (recid, rollno, fname, sname, surname, admitdate, birthdate, standard, sex)
+
+
+-- Write a query for following requirement:
+-- =======================================
+
+-- Q-1	Display Full Name of all the male students whose first name ends with "h" and are admitted 
+-- between 1st January 2006 to 1st August 2006.
+
+-- 	Eg:
+
+-- 	|----------------------|
+-- 	|FULL NAME	       |	
+-- 	|----------------------|
+-- 	|Kamlesh Rajubhai Patel|
+-- 	------------------------
+
+-- 	Here "Kamlesh" is the value of 'fname' column, "Rajubhai" of 'sname' and "Patel" of 'surname' column. 
+--     And first character is in capital for fname, sname, surname and each column value is separated by 
+--     single space.
+
+
+
+CREATE TABLE S_student
+(
+    recid int not null ,
+    rollno int not null,
+    fname varchar(50),
+    sname varchar(50),
+    surname varchar(50),
+    admitdate date,
+    birthdate date,
+    standard int ,
+    sex varchar(50)
+);
+
+select *
+from S_student
+INSERT INTO S_student
+VALUES
+    (841, 20117, 'Satish', 'Kumar', 'Singh', '2022-12-08', 10, 'Male'),
+    (842, 20118, 'Pankah', 'Singh', 'Sharma', '2023-01-01', 5, 'Male'),
+    (843, 20119, 'Amit', 'Sah', 'Kumar', '2021-08-05', 6, 'Male'),
+    (844, 20120, 'Pooja', 'Sah', 'Kumari', '2021-08-09', 7, 'Female');
+
+
+
+-- Q-1	Display Full Name of all the male students whose first name ends with "h" and are admitted 
+-- between 1st January 2006 to 1st August 2006.
+
+SELECT CONCAT(fname, ' ', sname, ' ', surname) as "Full Name"
+from S_student
+where sex = 'Male' and
+    fname like '%h' and admitdate between  '2022-12-08' and  '2023-01-01';
+
+
+
+
+
+
+-- Tables Used:
+-- ===========
+
+-- 1) product (recid, mfrid, description, price, qtyonhand)
+
+-- 2) orders (recid, customerid, orderdate, salesrepsid, productid, qty, amount)
+
+-- 3) customer (recid, company, salesrepsid, creditlimit)
+
+-- 4) salesreps (recid, name, officeid, designation, hiredate, manager, quota, sales, age)
+
+-- 5) office (recid, city, region, manager, targetsales, actualsales)
+
+
+
+
+-- 1) product (recid, mfrid, description, price, qtyonhand)
+create table S_product
+(
+    recid int,
+    mfrid int,
+    description varchar(100),
+    price int,
+    qtyonhand int
+)
+
+insert into S_product
+VALUES
+    (101, 511, 'AbotInterview', 500, 08),
+    (102, 512, 'AboutComputer', 501, 09),
+    (103, 513, 'AboutLeptop', 502, 10),
+    (104, 514, 'friendship', 503, 11),
+    (105, 515, 'Dosti', 504, 1);
+
+
+
+
+
+
+
+-- 2) orders (recid, customerid, orderdate, salesrepsid, productid, qty, amount)
+create table S_orders
+(
+    recid int,
+    customerid int,
+    orderdate date,
+    salesrepsid int,
+    productid int,
+    qty int,
+    amount int
+)
+insert into S_orders
+values
+    (101, 11, '2022-01-10', 101, 41, 1, 50),
+    (102, 12, '2021-01-02', 102, 42, 2, 60),
+    (103, 13, '2020-01-03', 103, 43, 3, 70),
+    (104, 14, '2019-01-04', 104, 44, 4, 80),
+    (105, 15, '2018-01-05', 105, 45, 5, 90);
+
+
+
+
+
+
+
+-- 3) customer (recid, company, salesrepsid, creditlimit)
+create table S_customer
+(
+    recid int,
+    company varchar(50),
+    salesrepsid int,
+    creditlimit int
+)
+insert into S_customer
+values
+    (101, "Squad ", 101, 1100),
+    (102, "Cognigent", 102, 2100),
+    (103, "Capmini", 103, 3100),
+    (104, "Infosys", 104, 4100),
+    (105, "Wipro", 105, 5100);
+
+
+
+
+
+
+
+
+
+-- 4) salesreps (recid, name, officeid, designation, hiredate, manager, quota, sales, age)
+create table S_salesreps
+(
+    recid int,
+    name varchar(50),
+    officeid int,
+    designation varchar(50),
+    hiredate date,
+    manager varchar(50),
+    quota int,
+    sales int,
+    age int
+);
+insert into S_salesreps
+VALUES
+    (101, "isha", 101, "ahmedabad", "2023-01-01", "satish", 150, 500, 22),
+    (102, "yash", 102, "banglore", "2023-01-02", "jaydev", 160, 501, 23),
+    (103, "krupa", 103, "hydrabad", "2023-01-03", "prince", 170, 502, 24),
+    (104, "darshan", 104, "pune", "2023-01-04", "maulik", 180, 503, 25),
+    (105, "tanvi", 105, "chennai", "2023-01-05", "shubham", 190, 504, 26);
+
+
+
+
+
+
+-- 5) office (recid, city, region, manager, targetsales, actualsales)
+create table S_office
+(
+    recid int,
+    city varchar(50),
+    region varchar(50),
+    manager varchar(50),
+    targetsales int,
+    actualsales int
+);
+insert into S_office
+VALUES
+    (101, 'ahmedabad', 'Gujrat', 'satish', 400, 100),
+    (102, 'Visakhapatanam', 'Andra', 'jaydev' , 400, 400),
+    (103, 'bhubneswer', 'Odisha', 'pankaj', 400, 200),
+    (104, 'patna', 'Bihar', 'Amit', 400, 300),
+    (105, 'Siwan', 'Bihar', 'sanjay', 400, 250);
+
+
+
+
+
+
+
+-- Write queries for below requirements:
+-- =====================================
+
+-- Q-1	Find Name of all those sales representatives whose offices are in cities ending with 
+-- 	"pur" and who have atleast 2 customers. The sales representative must be hired before 
+-- 	1st January 2006 and his/her minimum age should be 21 yrs.
+
+-- 	Display fields : Sales Rep. Name, Office City, No. of Customers, Hired on
+
+
+
+
+
+
+
+
+-- Q-2	Find following information for each customer:
+
+-- 	Display fields : Company Name, Sales Rep. Name, Sales Rep. Office City, Company Credit
+
+
+SELECT company as "Company Name" , name as "Sales Rep. Name", city as "Sales Rep. Office City",
+    creditlimit as "Company Credit"
+from S_customer c INNER JOIN S_office o INNER JOIN S_salesreps sr on
+c.recid = o.recid and c.recid = sr.recid ;
+
+
+
+
+
+-- Q-3	Find following information for each office:
+
+-- 	Office city, Total Sales Rep., Total sale by all sales Rep.,
+-- 	Target Sales, Actual Sales, Difference of Target and Actual Sales.
+
+-- 	Display fields : Office City, No. of Sales Rep., Total Sale, Target Sales, Actual  Sales, Difference.
+
+SELECT city as "Office City", sales as "No. of Sales Rep.", count(actualsales) as "Total Sales",
+    targetsales as "Target Sales", actualsales as "Actual  Sales", (targetsales - actualsales) as "Difference"
+from S_office o INNER JOIN S_salesreps s on o.recid = s.recid
+group by o.recid;
+
+
+
+-- Q-4	Find following information for each product:
+
+-- 	Product description, Price, Quantity on hand, Total no. of 
+-- 	orders for each product, Total quantity ordered, Total amount of the orders for each product.
+
+-- 	Display fields : Description, Price, Quantity, Orders, Quantity, Total Amount
+
+SELECT description as "Description", price as "Price", qtyonhand as "Quantity", count(orderdate) as "QuantityOrders",
+    price as "Total Amount"
+FROM S_product p INNER JOIN S_orders o on p.recid = o.recid;
+
+
+
+-- Q-5	Find order details for all the customers. There will be one row per customer displaying 	
+-- 	total quantity ordered by them and the amount spent by each customer.
+
+-- 	Display fields : Company Name, Total Quantity Ordered, Total Amount
+
+select company as "Company Name", qty as "Total Quantity Order", amount
+from S_orders o inner join S_customer c on o.recid=c.recid
+group by company;
+
+
+
+-- Q-6	Display all the sales representatives hired within the past five years from today along with thier Quota and 
+-- 	Sales information.
+
+-- 	Display fields : Sales Rep. Name, Hired on, Quota, Sales
+
+select name as "Sales Rep. Name", hiredate as "Hired on", quota as "Quota", sales
+from S_salesreps
+where hiredate>=(ADDDATE(curdate(), INTERVAL -5 year));
+
+
+
+
+
+-- Q-7	Find total number of customers for all the products ordered. There will be one row per 	
+-- 	order displaying product description, and total number of customers who have ordered that product.
+
+-- 	Display fields : Product Description, Total No. of Customers who Ordered this Product.
+
+
+SELECT description  as "Product Description",
+    count(p.recid) as "Total No. of Customers who Ordered this Product"
+FROM S_customer c INNER JOIN S_product p on c.recid = p.recid;
+
+
+
+
+
+
+
+-----------------------------------------Assignment-12------------------------------------
+
+
+-- Tables used:
+-- ===========
+-- 1) product (recid, mfrid, description, price, qtyonhand)
+
+-- 2) orders (recid, customerid, orderdate, salesrepsid, productid, qty, amount)
+
+-- 3) customer (recid, company, salesrepsid, creditlimit)
+
+-- 4) salesreps (recid, name, officeid, designation, hiredate, manager, quota, sales, age)
+
+-- 5) office (recid, city, region, manager, targetsales, actualsales)
+
+
+-- Write queries for following requirements:
+
+
+-- Q-1	List all the orders which are over Rs.25,000/- including the name of the sales person 	who has taken the order and the name of the customer who has placed that order.
+select name, amount
+from S_orders, 
+
+
+
+-- Q-2	List out total different customers served by each sales person.
+select c.*, sr.name
+FROM S_customer c INNER JOIN S_salesreps sr ON sr.recid = c.salesrepsid;
+
+
+-- Q-3	Calculate total order for each customer of each sales person, sorted by customer and within each customer by sales person.
+
+
+
+
+
+
+-- Q-4	What is the average order size for each sales person whose order total is more than amount Rs.30,000/-.
+select name , avg(amount)
+from S_orders as o inner join S_salesreps as s on o.salesrepsid=s.recid
+where amount>=30000
+group by name;
+
+
+
+
+
+
+-- Q-5	List all the sales person who are over 40 in age and who manages a sales person whose sales are over quota.
+select *
+from S_salesreps
+where age>=40 and quota=160;
+
+
+
+
+
+
+-- Q-6	List all the customers whose sales people are assign to two different offices in the 	"Eastern" sales region.
+select *
+from S_customer as c inner join S_salesreps as sr inner join S_office as ofc
+    on sr.recid=c.salesrepsid and sr.officeid = ofc.recid 
+where region  ='Gujrat';
+
+
+
+-- Q-7	List all of the sales persons whose office target sales exceeds the sum of their quota.
+
+
+
+
+
+-- Q-8	List all the sales people whose average order size for products manufactured by 56 	i.e.(mfrid) is 	higher than the overall average order size.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+-----------------------------------------Assignment-13------------------------------------
+
+-- =========================================================================================
+-- DATABASE :
+-- =========================================================================================
+
+-- Assume a hypothetical company that manages multiple automobile dealerships throughout INDIA.
+
+-- Following are the data requirements of our company :
+
+-- * A "car" is described by a vehicle identification number (VIN), make (e.g., Toyota), model (e.g., Prius), year, mileage, and two prices: the asking price (how much the dealership would like to sell the car for) and the invoice price (how much the dealership paid for the car). This information is maintained for every car currently in any dealership's inventory, and also for every car that has ever been sold by one of the dealerships. 
+
+-- * A dealership is a single location where the company sells cars. The company manages many dealerships, each one being described by a unique dealership ID, a name (e.g., Honda Sales, Yamaha World, Concept Hyundai etc.), street address, city, and state.
+
+-- * The company employs a number of salespeople. Each salesperson is assigned a unique salesperson ID. 
+
+-- * Salespeople work at one or more dealerships each month, and are paid a monthly base salary at each, regardless of how many cars they sell. Additionally, they are paid a commission on each car they sell. 
+
+-- * Information is maintained about all salespeople who ever worked for any dealership.
+
+-- * The following information is kept about each customer : ID, name, street address, city, and state.
+
+-- * Salespeople are arranged in a strict hierarchy, with each salesperson reporting to a "managing salesperson."
+
+-- * It is necessary to keep track of the inventory of cars currently available at each dealership. Of course, a particular car can only be in the inventory of one dealership at any given time.
+
+-- * A long-term record of all car sales is maintained. For each sale, the company tracks which car was bought, which customer bought it, which salesperson sold it, which dealership it was sold by, at which price it was sold for, and on which date it was sold.
+
+--    i. car (recid, vin, make, model, year, mileage, askprice, invoiceprice)
+--   ii. dealership (recid, name, address, city, state)
+--  iii. salesperson (recid, name)
+--   iv. customer (recid, name, address, city, state)
+--    v. reportsto (recid, salespersonid, managingsalespersonid)
+--   vi. worksat (recid, salespersonid, dealershipid, monthworked, basesalaryformonth)
+--  vii. inventory (recid, vin, dealershipid)
+-- viii. sale (recid, vin, customerid, salespersonid, dealershipid, saleprice, saledate)
+
+-- Calculate the payroll for the month of March 2007.
+-- 	* The payroll consists of the name, salesperson ID, and gross pay for each salesperson who worked that month.
+--         * The gross pay is calculated as the base salary at each dealership employing the salesperson that month, along with the total commission for the salesperson that month.
+--         * The total commission for a salesperson in a month is calculated as 5% of the profit made on all cars sold by the salesperson that month.
+--         * The profit made on a car is the difference between the sale price and the invoice price of the car. (Assume, that cars are never sold for less than the invoice price.)
+
+
+
+
+
+
+
+-- =========================================================================================
+-- QUERIES :
+-- =========================================================================================
+
+
+-- 1. Find the names of all salespeople who have ever worked for the company at any dealership.
+
+
+
+-- 2. List the Name, Street Address, and City of each customer who lives in Ahmedabad.
+
+
+
+-- 3. List the VIN, make, model, year, and mileage of all cars in the inventory of the dealership named "Hero Honda Car World".
+
+
+
+-- 4. List names of all customers who have ever bought cars from the dealership named "Concept Hyundai".
+
+
+
+-- 5. For each car in the inventory of any dealership, list the VIN, make, model, and year of the car, along with the name, city, and state of the dealership whose inventory contains the car.
+
+
+
+-- 6. Find the names of all salespeople who are managed by a salesperson named "Adam Smith".
+
+
+
+-- 7. Find the names of all salespeople who do not have a manager.
+
+
+
+-- 8. Find the total number of dealerships.
+
+
+
+-- 9. List the VIN, year, and mileage of all "Toyota Camrys" in the inventory of the dealership named "Toyota Performance". (Note that a "Toyota Camry" is indicated by the make being "Toyota" and the model being "Camry".)
+
+
+
+-- 10. Find the name of all customers who bought a car at a dealership located in a state other than the state in which they live.
+
+
+
+-- 11. Find the name of the salesperson that made the largest base salary working at the dealership named "Ferrari Sales" during January 2007.
+
+
+
+-- 12. Find the salesperson ID and name of all salespeople who have worked at each one of the company's dealerships at some point in time.
+
+
+
+-- 13. List the name, street address, city, and state of any customer who has bought more than two cars from all dealerships combined since January 1, 2007.
+
+
+
+-- 14. List the name, salesperson ID, and total sales amount for each salesperson who has ever sold at least one car. The total sales amount for a salesperson is the sum of the sale prices of all cars ever sold by that salesperson.
+
+
+
+-- 15. Find the names of all customers who bought cars during 2007 who were also salespeople during 2007. For the purpose of this query, assume that no two people have the same name.
+
+
+
+-- 16. Find the name and salesperson ID of the salesperson who sold the most cars for the company at dealerships located in Gujarat between March 1, 2007 and March 31, 2007.
+
+
+
+-- 17. Calculate the payroll for the month of March 2007.
+-- 	* The payroll consists of the name, salesperson ID, and gross pay for each salesperson who worked that month.
+--         * The gross pay is calculated as the base salary at each dealership employing the salesperson that month, along with the total commission for the salesperson that month.
+--         * The total commission for a salesperson in a month is calculated as 5% of the profit made on all cars sold by the salesperson that month.
+--         * The profit made on a car is the difference between the sale price and the invoice price of the car. (Assume, that cars are never sold for less than the invoice price.)
+
+
+
+
+
+
+
+
+
+
+
+
+
+---------------------------Solution - 13------------------------------------
+
+
+//
+create table the car
+create table Manish_car2
+(
+    recid int
+    auto_increment primary key ,
+vin int not null,
+make varchar
+    (20) not null,
+model varchar
+    (20) not null,
+year date not null,
+mileage int not null,
+askprice int not null,
+invoiceprice int not null
+); //
+    insert the
+    table
+    insert into Manish_car2
+        (vin,make,model,year,mileage,askprice,invoiceprice)
+    values
+        ("BMW", "BMW Menufecture", "we1223", '2022-01-01', 10, 300000, 250000);
+    //
+    create tavle dealership
+    create table Manish_dealership2
+    (
+        recid int
+        auto_increment primary key ,
+dname varchar
+        (20) not null,
+daddress varchar
+        (20) not null,
+dcity varchar
+        (20) not null,
+dstate varchar
+        (20) not null
+);
+        insert the
+        table
+        insert into Manish_dealership2
+            (dname,daddress,dcity,dstate)
+        values
+            ("Ritesh Yadav", "40 Satya Sai ", "Surat", "Gujarat");
+        //
+        create table slaesperson
+        create table Manish_salesperson2
+        (
+            recid int
+            auto_increment primary key ,
+sname varchar
+            (20) not null
+); 
+//
+            insert the
+            table
+            insert into Manish_salesperson2
+                (sname)
+            values
+                ("Sujit Yadav");
+            create table manish_custome
+            create table Manish_customer2
+            (
+                recid int
+                auto_increment primary key,
+cname varchar
+                (20) not null,
+caddress varchar
+                (20) not null,
+ccity varchar
+                (20) not null,
+cstate varchar
+                (20) not null
+); //
+                insert the
+                Manish_customer2
+                insert into Manish_customer2
+                    (cname,caddress,ccity,cstate)
+                values("dipu Yadav", "dashasument", "varansi", "UP");
+                create table reportsto
+                create table Manish_reportsto2
+                (
+                    recid int
+                    auto_increment primary key,
+salespersonid int  references Manish_salesperson
+                    (recid) ,
+managingsalespersonid int not null
+);
+                    insert the
+                    table reportsto
+                    insert into Manish_reportsto2
+                        ( salespersonid,managingsalespersonid)
+                    values
+                        (1, 1);
+                    //
+                    create the table
+                    create table Manish_worksat2
+                    (
+                        recid int
+                        auto_increment primary key ,
+salespersonid int references Manish_salesperson2
+                        (recid),
+dealershipid int references Manish_dealership2
+                        (recid),
+monthworked date not null,
+basesalaryformonth int null
+);
+                        insert into Manish_worksat2
+                            (salespersonid,dealershipid,monthworked,basesalaryformonth)
+                        values
+                            (1, 1, '2022-01-01', 30000);
+                        //
+                        create table Inventory
+                        create table Manish_inventory2
+                        (
+                            recid int
+                            auto_increment primary key,
+vin int not null,
+dealershipid int references Manish_dealership2
+                            (recid)
+);
+                            insert table
+                            insert into Manish_inventory2
+                                (vin,dealershipid)
+                            values
+                                (124, 2);
+                            //
+                            create table sale Manish_sale2
+                            create table Manish_sale2
+                            (
+                                recid int
+                                auto_increment primary key ,
+vin int not null,
+customerid int references Manish_customer2
+                                (recid),
+salespersonid int references Manish_salesperson2
+                                (recid),
+dealershipid int references Manish_dealership2
+                                (recid),
+saleprice int not null, 
+saledate date not null
+); 
+//
+                                insert the
+                                table
+                                insert into Manish_sale2
+                                    (vin,customerid,salespersonid,dealershipid,saleprice,saledate)
+                                values
+                                    (124, 2, 2, 2, 40000, '2022-01-01');
+                                Q-1.
+                                Ans:
+                                -
+                                select sname
+                                from Manish_salesperson2 as s inner join Manish_worksat2 as w on s.recid=w.salespersonid inner join Manish_dealership2 as de on w.dealershipid=de.recid
+                                group by sname;
+                                Q-2.
+                                Ans:
+                                -
+                                select cname, caddress, ccity
+                                from Manish_customer2
+                                where ccity='Ahmedabad';
+                                Q-3.
+                                Ans:
+                                -
+                                select i.vin, make, model, year, mileage
+                                from Manish_inventory2 i inner join Manish_car2 c on i.vin=c.vin inner join Manish_dealership2 de on i.dealershipid=de.recid
+                                where dname="Hero Honda Car World"
+                                ;
+                                Q-4.
+                                Ans:
+                                -
+                                select *
+                                from Manish_customer2 c inner join Manish_sale2 s on c.recid=s.customerid inner join Manish_dealership2 d on s.dealershipid=d.recid
+                                where dname="Concept Hyundai";
+                                Q-5.
+                                Ans:
+                                -
+                                select DISTINCT i.vin , make, model, year, dname, dcity, dstate
+                                from Manish_inventory2 i inner join Manish_car2 c on i.vin=i.vin inner join Manish_dealership2 d on d.recid=i.dealershipid
+                                group by make
+                                ;
+                                Q-6.
+                                Ans:
+                                -
+                                select *
+                                from Manish_sale2 s1 inner join Manish_salesperson2 s2 on s1.dealershipid=s2.recid
+                                where sname like 'Adam Smith';
+                                Q-7.
+                                Ans:
+                                -
+                                select sname
+                                from Manish_salesperson2 s inner join Manish_reportsto2 r on s.recid=r.salespersonid
+                                where r.managingsalespersonid=0;
+                                Q-8.
+                                Ans:
+                                -
+                                select count(recid) as "dealerships"
+                                from Manish_dealership2;
+                                Q-9.
+                                Ans:
+                                -
+                                select distinct concat(make,' ',model) As "Name", i.vin, year, mileage
+                                from Manish_inventory2 i inner join Manish_car2 c on i.vin=c.vin inner join Manish_dealership2 de on de.recid=i.dealershipid
+                                where dname='Toyota Performance';
+                                Q-10.
+                                Ans:
+                                -
+                                select cname
+                                from Manish_customer2 c inner join Manish_sale2 s on s.recid=s.customerid inner join Manish_dealership2 de on de.recid=s.dealershipid
+                                where cstate!=dstate
+                                ;
+                                Q-11.
+                                Ans:
+                                -
+                                select dname, max(basesalaryformonth)
+                                from Manish_salesperson2 s inner join Manish_worksat2 w on s.recid=w.salespersonid inner join Manish_dealership2 de on w.dealershipid=de.recid
+                                where monthworked='2022-01-01'
+                                ;
+                                Q-12.
+                                Ans:
+                                -
+                                select s2.recid , s1.sname
+                                from Manish_salesperson2 s1 inner join Manish_sale2 s2 on s1.recid=s2.salespersonid inner join Manish_worksat2 w on w.salespersonid=s2.recid
+                                group by recid
+                                ;
+                                Q-13.
+                                Ans:
+                                -
+                                select cname, caddress, ccity, cstate
+                                from Manish_customer2 c inner join Manish_sale2 s on c.recid=s.salespersonid
+                                group by cname,caddress,ccity,cstate,saledate
+                                having COUNT(s.customerid)>2 and saledate='2007-01-01';
+                                Q-14.
+                                Ans:
+                                -
+                                select sname , salespersonid , sum(saleprice)
+                                from Manish_sale2 s1 inner join Manish_salesperson2 s2 on s1.salespersonid=s2.recid
+                                group by sname ,salespersonid,saleprice,s2.recid
+                                having count(s2.recid)>=1;
+                                Q-15.
+                                Ans:
+                                -
+                                select cname
+                                from Manish_sale2 s inner join Manish_customer2 c on c.recid=s.customerid inner join Manish_salesperson2 s1 on s1.recid=s.salespersonid
+                                where YEAR(saledate) =2007 and sname=cname
+                                group by cname;
+                                Q-16.
+                                Ans:
+                                -
+                                Select sname, s.salespersonid, (((saleprice-invoiceprice)*5)/100) + basesalaryonmonth as "Gross_Pay"
+                                from Manish_car2 c inner join Manish_sale2 a on c.vin=s.vin inner join Manish_salesperson2 on salesperson.id=s.salespersonid inner join Manish_worksat on s.delershipid=Manish.worksat.delershipid
+                                where year(monthworked) = 2007 and month(monthworked) = 3;
+                                Q-17.
+                                Ans:
+                                -
+                                Select sname, s.salespersonid
+                                from Manish_car2 c inner join Manish_sale2 a on c.vin=s.vin inner join Manish_salesperson2 on salesperson.id=s.salespersonid inner join Manish_worksat on s.delershipid=Manish.worksat.delershipid
+                                where year(monthworked) = 2007 and month(monthworked) = 3; 
