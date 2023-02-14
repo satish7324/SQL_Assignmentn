@@ -760,3 +760,106 @@ amount int not null
             -
             select description, count(cust.recid) as "Total No. of Customers who Ordered this Product"
             from trainee.Manish_customer1 cust inner join trainee.Manish_Product1 po  ;
+	    
+	    
+	    
+	    
+	    
+	    Table for Q11
+	    
+	    
+create table S_Product
+(
+recid int primary key,
+mfrid int not null,
+description varchar(15) not null,
+price int not null,
+qtyonhand int not null
+);
+insert into S_Product
+(mfrid, description, price, qtyonhand)
+values
+(101, "iphone", 50000, 1),
+(102, "Android", 20000, 1);
+
+
+
+
+create table S_office
+(
+recid int primary key,
+city varchar(150) ,
+region varchar(210),
+manager varchar(145),
+targetsales int ,
+actualsales int
+);
+insert into S_office
+(recid, city, region, manager, targetsales, actualsales)
+values
+ (101, "Surat", "Ahmedabad", "Satish Singh", 100, 50);
+
+
+
+
+create table S_salesreps
+(
+recid int primary key,
+name varchar(20) not null,
+designation varchar(10),
+hiredate date,
+manager varchar(20), 
+quota varchar(20),
+sales int,
+age int,
+officeid int not null references S_office(recid)
+);
+insert into S_salesreps
+(name,designation,hiredate,manager,quota,sales,age,officeid)
+values
+("Mitesh", "No", '2023-12-19', "Manish", "govt", 15, 20, 1);
+
+
+
+
+
+
+create table S_customer
+(
+recid int primary key,
+company varchar(20) ,
+creditlimit int,
+salesrepsid int references S_salesreps (recid)
+);
+insert into S_customer
+(company,creditlimit,salesrepsid)
+values
+("Squad", 50000, 1);
+
+
+
+
+
+
+
+
+create table S_orders
+(
+recid int primary key ,
+customerid int references S_customer
+(recid),
+orderdate date not null,
+salesrepsid int references S_salesreps
+(recid),
+productid int references S_Product
+(recid),
+qty int not null,
+amount int not null
+);
+insert into S_orders
+(customerid,orderdate,salesrepsid,productid,qty,amount)
+values(1, '2023-12-23', 1, 1, 10, 25000);
+	    
+	    
+	    
+	    
