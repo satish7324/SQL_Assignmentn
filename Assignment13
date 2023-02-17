@@ -1,0 +1,286 @@
+
+
+
+
+----------1.Table For Car--------------------------
+
+create table Satish_car
+(
+recid int
+auto_increment primary key ,
+vin int not null,
+make varchar(20) not null,
+model varchar(20) not null,
+year int not null,
+mileage int not null,
+askprice int not null,
+invoiceprice int not null
+);
+insert into Satish_car
+( vin, make, model, year, mileage, askprice, invoiceprice)
+ values
+(201, 'Audi Manufacturing', 'Ad2023', 2023, 50, 500000, 520000),
+(202, 'Toyota Manufacturing', 'Ty2022', 2022, 20, 300000, 320000);
+
+select * from Satish_car;
+
+
+
+
+
+----------2.Table For dealership --------------------------
+
+
+create table Satish_dealership
+(
+recid int auto_increment primary key ,
+D_name varchar(20) not null,
+D_address varchar(20) not null,
+D_city varchar(20) not null,
+D_state varchar(20) not null
+);
+insert into Satish_dealership 
+(D_name, D_address, D_city, D_state)
+values
+('Satish Singh',  'Sola', 'Ahmedabad', 'Gujarat'),
+('Simran',  'Adajan', 'Surat', 'Gujarat');
+
+SELECT * FROM Satish_dealership;
+
+
+
+
+
+----------3.Table For salesperson --------------------------
+
+create table Satish_salesperson
+(
+recid int
+auto_increment primary key,
+S_name varchar(20) not null
+);
+insert into Satish_salesperson(S_name)
+values
+("Amit Singh"),
+('Tinku Lal');
+
+SELECT * FROM Satish_salesperson;
+
+
+
+
+
+----------4.Table For salesperson --------------------------
+
+ create table Satish_customer
+(
+recid int auto_increment primary key,
+C_name varchar(20) not null,
+C_address varchar(20) not null,
+C_city varchar(20) not null,
+C_state varchar(20) not null
+);
+insert into Satish_customer
+(C_name, C_address, C_city, C_state)
+values
+('Pankaj Sharma', 'Siwan', 'Patna', 'Bihar'),
+('Pawan Singh', 'Gopalganj', 'Gopalganj', 'Bihar');
+
+
+SELECT * FROM Satish_customer;
+
+
+
+
+
+
+----------5.Table For reportsto --------------------------
+
+create table Satish_reportsto
+(
+recid int auto_increment primary key,
+salespersonid int references Satish_salesperson(recid) ,
+managingsalespersonid int not null
+);
+insert into Satish_reportsto 
+(salespersonid, managingsalespersonid)
+values  
+(1, 1),
+(2, 2);
+
+SELECT * FROM Satish_reportsto;
+
+
+
+
+----------6.Table For worksat --------------------------
+
+
+create table Satish_worksat
+(
+recid int auto_increment primary key ,
+salespersonid int references Satish_salesperson(recid),
+dealershipid int references Satish_dealership(recid),
+monthworked date not null,
+basesalaryformonth int null
+);
+insert into Satish_worksat
+(salespersonid,dealershipid,monthworked,basesalaryformonth)
+values
+(1, 1, '2022-01-01', 30000),
+(2, 2, '2021-05-02', 40000);
+
+SELECT * FROM Satish_worksat;
+
+
+
+----------7.Table For inventory  --------------------------
+
+create table Satish_inventory
+(
+recid int auto_increment primary key,
+vin int not null,
+dealershipid int references Satish_dealership(recid)
+);
+insert into Satish_inventory
+(vin, dealershipid)
+values
+(201, 2),
+(202, 3);
+
+SELECT * FROM Satish_inventory;
+
+
+
+----------8.Table For sale  --------------------------
+
+create table Satish_sale
+(
+recid int auto_increment primary key ,
+vin int not null,
+customerid int references Satishj_customer(recid),
+salespersonid int references Satish_salesperson(recid),
+dealershipid int references Satish_dealership(recid),
+saleprice int not null,
+saledate date not null
+);
+
+insert into Satish_sale
+(vin,customerid,salespersonid,dealershipid,saleprice,saledate)
+values
+(201, 2, 2, 2, 40000, '2022-05-01'),
+(202, 3, 3, 3, 5000, '2023-01-02');
+
+SELECT * FROM Satish_sale;
+
+
+
+
+
+
+
+-- =========================================================================================
+-- QUERIES :
+-- =========================================================================================
+
+
+-- 1. Find the names of all salespeople who have ever worked for the company at any dealership.
+
+select s_name as Name from Satish_salesperson as sp inner join Satish_worksat as ws
+on sp.recid = ws.salespersonid group by S_name;
+
+
+-- 2. List the Name, Street Address, and City of each customer who lives in Ahmedabad.
+select  C_name as name , C_address as Address, C_city as City from Satish_customer WHERE C_city = 'patna';
+
+
+-- 3. List the VIN, make, model, year, and mileage of all cars in the inventory of the dealership named "Hero Honda Car World".
+select cr.vin, make, model, year, mileage
+from  Satish_car cr inner join Satish_inventory iv on
+iv.vin=cr.vin inner join Satish_dealership ds on iv.dealershipid=ds.recid
+where ds.D_name='Hero Honda Car World';
+
+select cr.vin, make, model, year, mileage
+from  Satish_car cr inner join Satish_inventory iv on
+iv.vin=cr.vin inner join Satish_dealership ds on iv.dealershipid=ds.recid
+where ds.D_name='Satish Singh';
+
+-- 4. List names of all customers who have ever bought cars from the dealership named "Concept Hyundai".
+select C_name as name from Satish_customer as c INNER JOIN  Satish_dealership as ds
+on c.recid = ds.recid where ds.D_name = 'Satish Singh';
+
+-- 5. For each car in the inventory of any dealership, list the VIN, make, model, and year of the car,
+--  along with the name, city, and state of the dealership whose inventory contains the car.
+
+
+-- 6. Find the names of all salespeople who are managed by a salesperson named "Adam Smith".
+select S_name from Satish_sale s inner join Satish_salesperson sp on
+s.dealershipid = sp.recid where S_name like 'Adam Smith';
+
+
+-- 7. Find the names of all salespeople who do not have a manager.
+select S_name from Satish_salesperson sp inner join Satish_reportsto rp on sp.recid=rp.salespersonid
+where rp.managingsalespersonid is null; 
+
+
+-- 8. Find the total number of dealerships.
+select count(recid) as "Dealerships" from Satish_dealership;
+
+
+-- 9. List the VIN, year, and mileage of all "Toyota Camrys" in the inventory of the dealership named "Toyota Performance". (Note that a "Toyota Camry" is indicated by the make being "Toyota" and the model being "Camry".)
+
+
+
+-- 10. Find the name of all customers who bought a car at a dealership located in a state other
+--  than the state in which they live.
+select C_name
+from Satish_customer c inner join Satish_sale s on c.recid=s.customerid inner join
+Satish_dealership de on de.recid=s.dealershipid
+where C_state!= D_state;
+
+
+-- 11. Find the name of the salesperson that made the largest base salary working at the dealership named "Ferrari Sales" during January 2007.
+select D_name, max(basesalaryformonth)
+from Satish_salesperson s inner join Satish_worksat ws on
+s.recid=ws.salespersonid inner join Satish_dealership ds on ws.dealershipid=ds.recid
+where monthworked='2022-01-01';
+
+-- 12. Find the salesperson ID and name of all salespeople who have worked at each one of the company's dealerships at some point in time.
+select sp.recid , s.S_name
+from Satish_salesperson s inner join Satish_sale sp on s.recid=sp.salespersonid
+inner join Satish_worksat ws on ws.salespersonid=sp.recid
+group by recid;
+    
+
+-- 13. List the name, street address, city, and state of any customer who has bought more than two cars from all dealerships combined since January 1, 2007.
+select C_name, C_address, C_city, C_state from Satish_customer as c
+inner join Satish_sale s  on c.recid = s.customerid having count(s.customerid)>=2;
+
+
+-- 14. List the name, salesperson ID, and total sales amount for each salesperson who has ever sold at least one car. 
+-- The total sales amount for a salesperson is the sum of the sale prices of all cars ever sold by that salesperson.
+select S_name, salespersonid, sum(saleprice) FROM Satish_sale s INNER JOIN Satish_salesperson sp
+on s.salespersonid = sp.recid group by S_name, salespersonid, saleprice,
+ sp.recid having count(sp.recid)>=1 ;
+
+
+-- 15. Find the names of all customers who bought cars during 2007 who were also salespeople during 2007. For the purpose of this query, assume that no two people have the same name.
+SELECT C_name FROM Satish_customer  
+
+
+
+-- 16. Find the name and salesperson ID of the salesperson who sold the most cars for the company at dealerships located in Gujarat between March 1, 2007 and March 31, 2007.
+select S_name from Satish_salesperson sp inner join Satish_sale s on sp.recid = s.salespersonid
+inner join Satish_dealership ds on ds.recid = s.dealershipid where ds.D_state = 'Gujarat' and s.saledate
+between '2007-03-01' and '2027-03-31';
+
+
+-- 17. Calculate the payroll for the month of March 2007.
+-- 	* The payroll consists of the name, salesperson ID, and gross pay for each salesperson who worked that month.
+--         * The gross pay is calculated as the base salary at each dealership employing the salesperson that month, along with the total commission for the salesperson that month.
+--         * The total commission for a salesperson in a month is calculated as 5% of the profit made on all cars sold by the salesperson that month.
+--         * The profit made on a car is the difference between the sale price and the invoice price of the car. (Assume, that cars are never sold for less than the invoice price.)
+
+
+
+                    
